@@ -5,6 +5,7 @@ var cityInputEl = document.querySelector("#cityName");
 var historyEl = document.querySelector("#history");
 var cityContainerEl = document.querySelector("#cityContainer");
 var forecastContainerEl = document.querySelector("#forecastContainer");
+var count = 0;
 
 var formSubmitHandler = function (event) {
   event.preventDefault();
@@ -15,6 +16,10 @@ var formSubmitHandler = function (event) {
     var historyBtn = document.createElement("button");
     historyBtn.classList = "button";
     historyBtn.innerHTML = cityInputEl.value;
+    historyBtn.setAttribute(
+      "onclick",
+      `historyLookup("${historyBtn.innerHTML}")`
+    );
     historyEl.appendChild(historyBtn);
     cityInputEl.value = "";
     getCity(cityName);
@@ -33,7 +38,6 @@ var getCity = function (cityName) {
           if (data.length) {
             cleardata(cityContainerEl);
             getCityInfo(data[0].lat, data[0].lon, data[0].name);
-            console.log(data);
           } else {
             alert("The city location is unknown: " + city);
           }
@@ -69,12 +73,11 @@ var getCityInfo = function (lat, lon, name) {
           var cityDateWeather = document.createElement("h2");
           cityDateWeather.innerHTML = `${name} (${now})`;
           cityContainerEl.appendChild(cityDateWeather);
-          //var icon = data.current.weather[0].icon;
+          var icon = data.current.weather[0].icon;
           //   cityDateWeather.setAttribute(
           //     "src",
-          //     "https://openweathermap.org/img/w/" + icon + ".png"
+          //
           //   );
-          console.log(data.current);
           for (let i = 0; i < 6; i++) {
             var tomorrow = new Date(data.daily[i].dt * 1000).toLocaleString(
               "en-US",
@@ -87,13 +90,18 @@ var getCityInfo = function (lat, lon, name) {
               }
             );
             var date = document.createElement("h5");
+            var wicon = document.createElement("img");
+            var icon = data.daily[i].weather[0].icon;
             var list = document.createElement("div");
             var cityTemp = document.createElement("p");
             var cityWind = document.createElement("p");
             var cityHumidity = document.createElement("p");
-
             list.classList = "list";
             date.textContent = tomorrow;
+            wicon.setAttribute(
+              "src",
+              "https://openweathermap.org/img/w/" + icon + ".png"
+            );
             cityTemp.textContent = "Temp: " + data.daily[i].temp.day + "\xB0F";
             cityWind.textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
             cityHumidity.textContent =
@@ -109,20 +117,21 @@ var getCityInfo = function (lat, lon, name) {
               } else {
                 cityUV.classList = "UVS";
               }
+
+              cityContainerEl.appendChild(wicon);
               cityContainerEl.appendChild(cityTemp);
               cityContainerEl.appendChild(cityWind);
               cityContainerEl.appendChild(cityHumidity);
               cityContainerEl.appendChild(cityUV);
             } else {
               list.appendChild(date);
+              list.appendChild(wicon);
               list.appendChild(cityTemp);
               list.appendChild(cityWind);
               list.appendChild(cityHumidity);
               forecastContainerEl.appendChild(list);
             }
           }
-
-          console.log(data);
           //   var cityToday = document.querySelector("#cityToday");
         });
       } else {
@@ -140,7 +149,8 @@ var cleardata = function (element) {
   }
 };
 
-var historytLookup = function () {};
+var historyLookup = function (cityName) {
+  getCity(cityName);
+};
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
-//historyEl.addEventListener("click", historyLookup);
