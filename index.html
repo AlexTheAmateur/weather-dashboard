@@ -31,11 +31,14 @@
             autofocus="true"
             class="form-input"
           />
-          <button type="submit" class="btn">Search</button>
+          <button type="submit" class="btn" id="submitBtn">Search</button>
         </form>
+        <div id="history"></div>
       </div>
-      <div id="cityToday"></div>
-      <div id="forecast"></div>
+      <div id="weatherContainer">
+        <div id="cityContainer"></div>
+        <div id="forecastContainer" class="flex-row"></div>
+      </div>
     </main>
     <script src="./assets/js/script.js"></script>
   </body>

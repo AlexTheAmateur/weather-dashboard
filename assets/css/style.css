@@ -1,0 +1,58 @@
+main {
+  display: flex;
+  flex-direction: row;
+}
+h1 {
+  text-align: center;
+  width: 100%;
+  background-image: linear-gradient(to bottom right, blue, turquoise);
+}
+
+ul {
+  list-style: none;
+}
+
+p {
+  color: honeydew;
+}
+.search {
+  display: flex;
+  flex-direction: column;
+  border-width: 2px;
+  border-color: black;
+}
+.button {
+  margin: 5px;
+}
+#weatherContainer {
+  border-width: 2px;
+  border-color: black;
+}
+#forecastTitle {
+  width: 100%;
+}
+#forecastContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#UVG {
+  max-width: 40px;
+  background-color: green;
+}
+
+#UVM {
+  max-width: 40px;
+  background-color: yellow;
+}
+
+#UVS {
+  max-width: 40px;
+  background-color: red;
+}
+
+.list {
+  background-color: #6699cc;
+  text-align: start;
+}
